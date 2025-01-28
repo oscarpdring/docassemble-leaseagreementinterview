@@ -1,0 +1,11 @@
+---
+attachment:
+ name: 111_NCP
+ filename: ncp_111_lease
+ docx template file: 111NCP_lease_1.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: ncp_doc
+
+---

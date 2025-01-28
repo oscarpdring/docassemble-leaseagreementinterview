@@ -1,0 +1,7 @@
+---
+code: |
+  def format_rent_line(year, amount):
+    rounded_amount = round(amount, 2)
+    amount_in_words = number_to_words(rounded_amount).replace('\u00A0dollars', '').replace('\u00A0cents', '')
+    return f"Year\u00A0{year}:\u00A0${amount:,.2f}\u00A0({amount_in_words})\u00A0per\u00A0month\n"
+---

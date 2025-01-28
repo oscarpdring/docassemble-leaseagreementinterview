@@ -1,0 +1,107 @@
+---
+mandatory: True
+code: |
+ if not defined('user_approves'):
+   need(lease_date)
+   need(landlord_entity)
+   need(tenant_entity)
+   need(tenant_dba)
+   need(broker_involved_yn)
+   need(initial_rental_amount)
+   initial_rental_amount = int(initial_rental_amount)
+   
+   logo_file = floor_plan if floor_plan else None
+   if broker_involved_yn:
+     need(broker_name)
+     need(broker_commission)
+     broker_commission_math = float((broker_commission) * (initial_rental_amount))
+     broker_commission_formatted = f"${broker_commission_math:,.2f}"
+   else:
+     broker_name = "N/A"
+     broker_commission = 0
+     broker_commission_formatted = 0
+   
+   need(building_c_address)
+   need(unit_number)
+   need(previous_tenant_yn)
+   if previous_tenant_yn:
+     need(previous_tenant_name)
+   else:
+     previous_tenant_name = "N/A"
+     
+   need(curfew_time_yn)
+   if curfew_time_yn:
+     need(curfew_time)
+     curfew_statement = string("Tenant shall not operate for business in the Premises during the hours from") (curfew_time)
+   else:
+     curfew_statement = "INTENTIONALLY OMITTED"
+     
+   need(landlord_work)
+   need(lease_term_years)
+   lease_term_years = int(lease_term_years)
+   lease_term_years_words = number_to_words(lease_term_years)
+   
+   need(tenant_mailing_address)
+   need(tenant_permitted_use)
+   need(tenant_security_deposit)
+   
+   security_deposit_total = tenant_security_deposit * initial_rental_amount
+   security_deposit_total_formatted = f"${security_deposit_total:,.2f}"
+   initial_rental_amount_formatted = f"${initial_rental_amount:,.2f}"
+   tenant_security_deposit_formatted = f"${tenant_security_deposit:,.0f}"
+
+   need(annual_increase_yn)
+   if annual_increase_yn:
+     need(annum_increase)
+     rent_schedule_text = create_rent_schedule(
+         lease_term_years=int(lease_term_years),
+         initial_rental_amount=initial_rental_amount,
+         rent_schedule_type="annual_increase",
+         annum_increase=float(annum_increase)
+     )
+   else:
+     need(custom_rent_schedule)
+     annum_increase = 0
+     rent_schedule_text = create_rent_schedule(
+         lease_term_years=int(lease_term_years),
+         initial_rental_amount=initial_rental_amount,
+         rent_schedule_type="custom",
+         custom_schedule=custom_rent_schedule
+       )
+
+   need(rent_concession)
+   need(tax_year)
+   tax_year = int(tax_year)
+   need(tenant_share)
+   tenant_share = int(tenant_share)
+   tenant_share_words = number_to_words(tenant_share)
+   need(lease_commencement_date)
+   need(guarantors_name)
+   guarantor_signatures = format_guarantor_signatures(guarantors_name)
+
+   initial_rental_amount_words = number_to_words(initial_rental_amount)
+   rent_concession = int(rent_concession)
+   rent_concession_words = number_to_words(rent_concession)
+   tax_year_next = (tax_year + 1)
+   
+   guarantor_bullet_list = format_guarantor_list(guarantors_name)
+   guarantor_comma_list = format_comma_list(guarantors_name)
+
+   expiration_year = (lease_commencement_date.year + lease_term_years)
+   expiration_day = lease_commencement_date.day
+   expiration_month = lease_commencement_date.month
+   expiration_month_word = num_to_month(expiration_month)
+   
+   need(ncp_111_yn)
+   need(food_and_beverage_yn)
+   
+   docs_to_show = [final_document, good_guy]
+   if ncp_111_yn:
+     docs_to_show.append(ncp_doc)
+   if food_and_beverage_yn:
+     docs_to_show.append(fb_doc)
+   if broker_involved_yn:
+     docs_to_show.append(broker_doc)
+     
+   all_fields_complete = True
+---
