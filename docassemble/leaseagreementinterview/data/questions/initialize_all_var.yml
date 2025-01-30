@@ -17,7 +17,7 @@ code: |
      broker_commission_math = float((broker_commission) * (initial_rental_amount))
      broker_commission_formatted = f"${broker_commission_math:,.2f}"
    else:
-     broker_name = "N/A"
+     broker_name = "None"
      broker_commission = 0
      broker_commission_formatted = 0
    
@@ -48,7 +48,8 @@ code: |
    security_deposit_total = tenant_security_deposit * initial_rental_amount
    security_deposit_total_formatted = f"${security_deposit_total:,.2f}"
    initial_rental_amount_formatted = f"${initial_rental_amount:,.2f}"
-   tenant_security_deposit_formatted = f"${tenant_security_deposit:,.0f}"
+   tenant_security_deposit_formatted = f"{tenant_security_deposit:,.0f}"
+   tenant_security_deposit_words = number_to_words(tenant_security_deposit) 
 
    need(annual_increase_yn)
    if annual_increase_yn:
