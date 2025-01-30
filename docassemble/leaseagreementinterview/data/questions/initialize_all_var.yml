@@ -32,7 +32,7 @@ code: |
    need(curfew_time_yn)
    if curfew_time_yn:
      need(curfew_time)
-     curfew_statement = string("Tenant shall not operate for business in the Premises during the hours from") (curfew_time)
+     curfew_statement = "Tenant shall not operate for business in the Premises during the hours from " +  (curfew_time)
    else:
      curfew_statement = "INTENTIONALLY OMITTED"
      
