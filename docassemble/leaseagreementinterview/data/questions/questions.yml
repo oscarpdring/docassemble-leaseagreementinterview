@@ -31,6 +31,8 @@ fields:
  - Curfew Time: curfew_time
    datatype: text
    show if: curfew_time_yn
+   help: | 
+     Enter the time that the curfews are enforced. Ie. 10:00pm-6:00am
  - Landlord Work Description: landlord_work
    datatype: text
  - Lease Term (Years): lease_term_years
