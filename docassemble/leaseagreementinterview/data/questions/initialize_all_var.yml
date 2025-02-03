@@ -16,11 +16,16 @@ code: |
      need(broker_commission)
      broker_commission_math = float((broker_commission) * (initial_rental_amount))
      broker_commission_formatted = f"${broker_commission_math:,.2f}"
+     broker_short_form1 = "other than" + (broker_name) + "(\"Broker\")"
+     broker_short_form2 = "other than the Broker"
+     broker_short_form3 = "Landlord shall pay any commission due the Broker pursuant to a separate agreement between Landlord and the Broker "
    else:
      broker_name = "None"
      broker_commission = 0
      broker_commission_formatted = 0
-   
+     broker_short_form1 = " "
+     broker_short_form2 = " "
+     broker_short_form3 = " "
    need(building_c_address)
    need(unit_number)
    need(previous_tenant_yn)
@@ -48,6 +53,9 @@ code: |
    security_deposit_total = tenant_security_deposit * initial_rental_amount
    security_deposit_total_formatted = f"${security_deposit_total:,.2f}"
    initial_rental_amount_formatted = f"${initial_rental_amount:,.2f}"
+ 
+   #Amount of months the security is for
+ 
    tenant_security_deposit_formatted = f"{tenant_security_deposit:,.0f}"
    tenant_security_deposit_words = number_to_words(tenant_security_deposit) 
 
@@ -95,6 +103,7 @@ code: |
    
    need(ncp_111_yn)
    need(food_and_beverage_yn)
+   need(short_form_yn)
    
    docs_to_show = [final_document, good_guy]
    if ncp_111_yn:
@@ -103,6 +112,8 @@ code: |
      docs_to_show.append(fb_doc)
    if broker_involved_yn:
      docs_to_show.append(broker_doc)
+   if short_form_yn:
+     docs_to_show.append(short_form_lease_doc)
      
    all_fields_complete = True
 ---

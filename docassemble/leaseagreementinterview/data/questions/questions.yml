@@ -81,6 +81,10 @@ fields:
    datatype: yesnoradio
    help: |
      Select YES if this is a lease for a restaurant
+ - Would you like the short-form lease document?: short_form_yn
+   datatype: yesnoradio
+   help: |
+     Select YES if you would like the short-form lease to generate. 
  - Floor Plan: floor_plan
    datatype: file
    help: |
