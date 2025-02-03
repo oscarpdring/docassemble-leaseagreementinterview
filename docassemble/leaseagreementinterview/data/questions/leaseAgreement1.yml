@@ -16,6 +16,7 @@ include:
   - attach_NCP_lease.yml
   - attach_food_bev.yml
   - attach_broker_agreement.yml
+  - attach_short_form_lease.yml
 
 
 

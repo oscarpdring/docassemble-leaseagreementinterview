@@ -19,6 +19,7 @@ A DocAssemble interview that generates customizable lease agreements with option
   - 111 NCP Lease
   - Food & Beverage Use
   - Broker Agreement
+  - Short Form Lease
 
 ## Input Fields
 - Lease terms and dates
