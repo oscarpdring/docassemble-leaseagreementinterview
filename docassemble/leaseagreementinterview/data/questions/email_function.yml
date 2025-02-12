@@ -1,0 +1,115 @@
+---
+modules:
+  - docassemble.base.util
+---
+objects:
+  - email_handler: DAObject
+---
+code: |
+  def get_all_generated_documents():
+    all_docs = []
+    
+    # Scan for all document variables in the interview
+    for var in variables():
+      if isinstance(getattr(this, var), (DAFile, DAFileList)):
+        doc = getattr(this, var)
+        if doc not in all_docs:
+          all_docs.append(doc)
+    
+    return all_docs
+---
+code: |
+  def send_documents_email(recipient_email):
+    attachments = get_all_generated_documents()
+    doc_names = [doc.filename for doc in attachments]
+    doc_list = "\n".join([f"- {name}" for name in doc_names])
+    
+    try:
+      # Get current date
+      current_date = today()
+      
+      # Format email body with all variables
+      email_body = (f"""
+      Date: {current_date}
+
+      PROPERTY INFORMATION:
+      Building Address: {building_c_address}
+      Unit Number: {unit_number}
+      
+      PARTIES:
+      Landlord Entity: {landlord_entity}
+      Tenant Entity: {tenant_entity}
+      Tenant DBA: {tenant_dba}
+      
+      LEASE TERMS:
+      Lease Date: {lease_date}
+      Lease Term (Years): {lease_term_years}
+      Lease Commencement Date: {lease_commencement_date}
+      Initial Rental Amount: {initial_rental_amount_formatted}
+      Security Deposit: {security_deposit_total_formatted}
+      
+      BROKER INFORMATION:
+      Broker Involved: {broker_involved_yn}
+      Broker Name: {broker_name}
+      Broker Commission: {broker_commission_formatted if broker_involved_yn else "N/A"}
+      
+      TENANT USE:
+      Permitted Use: {tenant_permitted_use}
+      Previous Tenant: {previous_tenant_yn}
+      Previous Tenant Name: {previous_tenant_name}
+      
+      ADDITIONAL TERMS:
+      Curfew Required: {curfew_time_yn}
+      Curfew Time: {curfew_time if curfew_time_yn else "N/A"}
+      Annual Increase: {annual_increase_yn}
+      Annual Increase Percentage: {annum_increase if annual_increase_yn else "N/A"}
+      Rent Concession (Months): {rent_concession}
+      Tax Year: {tax_year}
+      Tenant Share: {tenant_share}%
+      
+      ADDITIONAL DOCUMENTS:
+      NCP 111 Required: {ncp_111_yn}
+      Food and Beverage Required: {food_and_beverage_yn}
+      Short Form Required: {short_form_yn}
+      
+      GUARANTOR INFORMATION:
+      Guarantor Names: {guarantor_comma_list}
+      
+      ATTACHED DOCUMENTS:
+      {doc_list}
+      
+      Please retain this email for your records. These values can be used to recreate the documents if needed.
+      """)
+      
+      send_email(
+        to=recipient_email,
+        subject=f"Lease Documents for {building_c_address}, Unit {unit_number}",
+        body=email_body,
+        attachments=attachments
+      )
+      return True
+    except Exception as e:
+      log("Error sending email: " + str(e))
+      return False
+---
+question: |
+  Where should we send the documents?
+fields:
+  - Email: recipient_email
+    datatype: email
+---
+question: |
+  Documents Sent Successfully
+subquestion: |
+  Your documents have been sent to ${ recipient_email }.
+  
+  All generated documents were included in the email.
+event: email_sent
+---
+question: |
+  Error Sending Documents
+subquestion: |
+  There was an error sending your documents to ${ recipient_email }.
+  
+  Please try again or contact support if the problem persists.
+event: email_error

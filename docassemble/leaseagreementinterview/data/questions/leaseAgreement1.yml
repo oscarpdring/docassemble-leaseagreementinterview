@@ -1,6 +1,7 @@
 ---
 include:
-  
+
+  - authentication.yml 
   - modules.yml
   - config.yml
   - number_to_words.yml
@@ -17,6 +18,7 @@ include:
   - attach_food_bev.yml
   - attach_broker_agreement.yml
   - attach_short_form_lease.yml
+  - email_function.yml
 
 
 
