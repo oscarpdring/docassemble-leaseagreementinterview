@@ -5,7 +5,7 @@ question: |
 subquestion: |
  Does it meet your approval?
 yesno: user_approves
-allow emailing: False
+allow emailing: True
 attachment code: |
  docs_to_show
 ---
