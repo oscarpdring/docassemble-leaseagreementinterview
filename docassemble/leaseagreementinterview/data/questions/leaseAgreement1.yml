@@ -1,4 +1,9 @@
 ---
+metadata: 
+  title: |
+    Lease Agreement Generator
+
+---
 include:
 
   - authentication.yml 
@@ -18,6 +23,11 @@ include:
   - attach_food_bev.yml
   - attach_broker_agreement.yml
   - attach_short_form_lease.yml
+  - summary.yml
+  #- email_function_pprint.yml
+
+
+  
   - email_function.yml
 
 
@@ -26,3 +36,5 @@ include:
 code: |
  if all_fields_complete:
    final_document
+
+ 

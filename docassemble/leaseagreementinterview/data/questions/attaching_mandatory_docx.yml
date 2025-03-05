@@ -6,6 +6,7 @@ subquestion: |
  Does it meet your approval?
 yesno: user_approves
 allow emailing: True
+email template: email_template
 attachment code: |
  docs_to_show
 ---
@@ -27,5 +28,3 @@ attachment:
    - pdf
    - docx
  variable name: good_guy
-
----
