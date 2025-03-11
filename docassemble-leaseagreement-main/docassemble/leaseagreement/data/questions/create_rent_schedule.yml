@@ -1,0 +1,32 @@
+---
+code: |
+  def create_rent_schedule(lease_term_years, initial_rental_amount, rent_schedule_type, annum_increase=0, custom_schedule=''):
+    rent_schedule = []
+    
+    if rent_schedule_type == "annual_increase":
+      current_rent = initial_rental_amount
+      for year in range(1, lease_term_years + 1):
+        if year == 1:
+          rent_schedule.append(format_rent_line(year, initial_rental_amount))
+        else:
+          increase_rate = annum_increase / 100
+          current_rent = current_rent * (1 + increase_rate)
+          current_rent = round(current_rent, 2)
+          rent_schedule.append(format_rent_line(year, current_rent))
+    else:
+      custom_rents = [rent.strip() for rent in custom_schedule.split('\n') if rent.strip()]
+      
+      if len(custom_rents) < lease_term_years:
+        return "Error: Not enough rent values provided for lease term"
+      
+      for year in range(1, lease_term_years + 1):
+        try:
+          monthly_rent = float(custom_rents[year-1])
+          monthly_rent = round(monthly_rent, 2)
+          rent_schedule.append(format_rent_line(year, monthly_rent))
+        except ValueError:
+          return f"Error: Invalid rent amount provided for year {year}"
+    
+    formatted_schedule = "\n".join(rent_schedule) + "\n"
+    return formatted_schedule
+---

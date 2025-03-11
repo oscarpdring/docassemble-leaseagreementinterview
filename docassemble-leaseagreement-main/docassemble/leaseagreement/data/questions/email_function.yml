@@ -1,0 +1,110 @@
+---
+modules:
+  - docassemble.base.util
+---
+code: |
+  def format_document_list(docs):
+    doc_names = []
+    for doc in docs:
+      if hasattr(doc, 'info'):
+        doc_names.append(doc.info.get('name', 'Document'))
+      else:
+        doc_names.append('Document')
+    return doc_names
+---
+code: |
+  attachment_list = format_document_list(docs_to_show)
+---
+template: email_template
+subject: |
+  Lease Documents for ${building_complete_address}, Unit ${unit_number}
+content: |
+  <strong><u>Date:</u></strong> ${today()}
+  <strong><u>PROPERTY INFORMATION:</u></strong>
+  <ul>
+    <li>Building Address: ${building_complete_address}</li>
+    <li>Unit Number: ${unit_number}</li>
+  </ul>
+  
+  <strong><u>PARTIES:</u></strong>
+  <ul>
+    <li>Landlord Entity: ${landlord_entity}</li>
+    <li>Tenant Entity: ${tenant_entity}</li>
+    <li>Tenant DBA: ${tenant_dba}</li>
+  </ul>
+  
+  <strong><u>LEASE TERMS:</u></strong>
+  <ul>
+    <li>Lease Date: ${lease_date}</li>
+    <li>Lease Term (Years): ${lease_term_years}</li>
+    <li>Lease Commencement Date: ${lease_commencement_date}</li>
+    <li>Initial Rental Amount: ${initial_rental_amount_decimal}</li>
+    <li>Security Deposit: ${security_deposit_total_decimal}</li>
+  </ul>
+  
+  <strong><u>BROKER INFORMATION:</u></strong>
+  <ul>
+    <li>Broker Involved: ${word(yesno(broker_involved_yn))}</li>
+    <li>Broker Name: ${broker_name}</li>
+    <li>Broker Commission: ${broker_commission_decimal if broker_involved_yn else "N/A"}</li>
+  </ul>
+  
+  <strong><u>TENANT USE:</u></strong>
+  <ul>
+    <li>Permitted Use: ${tenant_permitted_use}</li>
+    <li>Previous Tenant: ${word(yesno(previous_tenant_yn))}</li>
+    <li>Previous Tenant Name: ${previous_tenant_name}</li>
+  </ul>
+  
+  <strong><u>ADDITIONAL TERMS:</u></strong>
+  <ul>
+    <li>Curfew Required: ${word(yesno(curfew_time_yn))}</li>
+    <li>Curfew Time: ${curfew_time if curfew_time_yn else "N/A"}</li>
+    <li>Annual Increase: ${word(yesno(annual_increase_yn))}</li>
+    <li>Annual Increase Percentage: ${annum_increase if annual_increase_yn else "N/A"}</li>
+    <li>Rent Concession (Months): ${rent_concession}</li>
+    <li>Tax Year: ${tax_year}</li>
+    <li>Tenant Share: ${tenant_proportional_share}%</li>
+  </ul>
+  
+  <strong><u>ADDITIONAL DOCUMENTS:</u></strong>
+  <ul>
+    <li>NCP 111 Required: ${word(yesno(ncp_111_yn))}</li>
+    <li>Food and Beverage Required: ${word(yesno(food_and_beverage_yn))}</li>
+    <li>Short Form Required: ${word(yesno(short_form_yn))}</li>
+  </ul>
+  
+  <strong><u>GUARANTOR INFORMATION:</u></strong>
+  <ul>
+    <li>Guarantor Names: ${guarantor_comma_list}</li>
+  </ul>
+  <strong><u>ATTACHED FILES:</u></strong>
+  <ul>
+    % for name in attachment_list:
+    <li>${name}</li>
+    % endfor
+  </ul>
+  
+  Please retain this email for your records. These values can be used to recreate the documents if needed.
+---
+question: |
+  Where should we send the documents?
+fields:
+  - Email: recipient_email
+    datatype: email
+---
+question: |
+  Documents Sent Successfully
+subquestion: |
+  Your documents have been sent to ${recipient_email}.
+  
+  All generated documents were included in the email.
+event: email_sent
+---
+question: |
+  Error Sending Documents
+subquestion: |
+  There was an error sending your documents to ${recipient_email}.
+  
+  Please try again or contact support if the problem persists.
+event: email_error

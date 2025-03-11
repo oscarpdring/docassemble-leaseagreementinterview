@@ -1,0 +1,27 @@
+---
+mandatory: True
+question: |
+ Here is your document.
+allow emailing: True
+email template: email_template
+attachment code: |
+ docs_to_show
+---
+attachment:
+ name: Lease Agreement
+ filename: lease_agreement
+ docx template file: Lease_Agreement_3_1.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: final_document
+ 
+---
+attachment:
+ name: Good Guy Guarantee
+ filename: good_guy_guarantee
+ docx template file: Good_Guy_Guarantee.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: good_guy

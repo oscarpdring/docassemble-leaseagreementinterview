@@ -1,0 +1,97 @@
+
+---
+question: Lease Agreement Information
+fields:
+ - Date of Lease: lease_date
+   datatype: date
+ - Landlord Entity Name: landlord_entity
+   datatype: text
+ - Tenant Entity Name: tenant_entity
+   datatype: text
+ - Tenant's DBA: tenant_dba
+   datatype: text
+ - "Broker Involved?": broker_involved_yn
+   datatype: yesnoradio
+ - Broker Name: broker_name
+   datatype: text
+   show if: broker_involved_yn
+ - Broker Commission (Months): broker_commission
+   datatype: number
+   show if: broker_involved_yn
+ - Building Complete Address: building_complete_address
+   datatype: text
+ - Unit Number: unit_number
+   datatype: text
+ - Previous Tenant Existed?: previous_tenant_yn
+   datatype: yesno
+ - Previous Tenant Name: previous_tenant_name
+   datatype: text
+   show if: previous_tenant_yn
+ - Curfew Time Exists?: curfew_time_yn
+   datatype: yesno
+ - Curfew Time: curfew_time
+   datatype: text
+   show if: curfew_time_yn
+   help: | 
+     Enter the time that the curfews are enforced. Ie. 10:00pm-6:00am
+ - Landlord Work Description: landlord_work
+   datatype: text
+ - Lease Term (Years): lease_term_years
+   datatype: number
+ - "Annual Percentage Increase?": annual_increase_yn
+   datatype: yesnoradio
+   help: |
+     If NO, then enter a custom rent schedule. 
+ - Annual Increase Percentage: annum_increase
+   datatype: decimal
+   show if: annual_increase_yn
+ - Custom Monthly Rent Schedule (one amount per line): custom_rent_schedule
+   datatype: area
+   show if: 
+     variable: annual_increase_yn
+     is: False
+   help: |
+     Enter the monthly rent amount for each year of the lease.
+     Example for a 3-year lease:
+     5000
+     5200
+     5500
+ - Tenant Mailing Address: tenant_mailing_address
+   datatype: text
+ - Tenant Permitted Use: tenant_permitted_use
+   datatype: area
+ - Security Deposit (Months): tenant_security_deposit_months_multiplier
+   datatype: number
+ - Initial Rent Amount ($): initial_rental_amount
+   datatype: number
+ - Rent Concession (Half-Months): rent_concession
+   datatype: number
+ - Tax Base Year: tax_year
+   datatype: number
+ - Tenant Tax Share (%): tenant_proportional_share
+   datatype: decimal
+ - Lease Commencement Date: lease_commencement_date
+   datatype: date
+ - Guarantor Names (one per line): guarantors_name
+   datatype: area
+ - Is this Lease for 111 North Central Park Ave?: ncp_111_yn
+   datatype: yesnoradio
+   help: |
+     Select YES if this is a lease for 111 North Central Park Ave
+ - Is this Lease for a Restaurant?: food_and_beverage_yn
+   datatype: yesnoradio
+   help: |
+     Select YES if this is a lease for a restaurant
+ - Would you like the short-form lease document?: short_form_yn
+   datatype: yesnoradio
+   help: |
+     Select YES if you would like the short-form lease to generate. 
+ - Floor Plan: floor_plan
+   datatype: file
+   help: |
+     Please include any relevant images for demise of premises
+   accept: |
+     "image/jpeg, image/png"
+   image upload type: png
+   required: false
+---

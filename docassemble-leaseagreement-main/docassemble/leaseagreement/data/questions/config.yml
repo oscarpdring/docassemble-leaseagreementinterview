@@ -1,0 +1,19 @@
+---
+metadata:
+  title: Lease Agreement Generator
+  description: Generates lease agreements with customizable terms and optional riders
+  authors:
+    - organization
+  revision_date: 2024-01-23
+  version: 1.0
+  required_dependencies: 
+    - num2words
+    - docassemble.base.util
+  document_outputs:
+    - base lease agreement 
+    - good guy guarantee
+    - 111 NCP rider
+    - food & beverage rider
+    - broker agreement
+
+---
