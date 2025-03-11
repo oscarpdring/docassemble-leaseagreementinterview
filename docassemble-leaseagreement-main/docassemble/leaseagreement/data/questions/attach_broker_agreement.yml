@@ -1,0 +1,11 @@
+---
+attachment:
+ name: broker_agreement
+ filename: broker_agreement
+ docx template file: Brokerage_agreement_1.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: broker_doc
+
+---

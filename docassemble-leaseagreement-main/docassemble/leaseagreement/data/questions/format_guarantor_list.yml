@@ -1,0 +1,9 @@
+---
+code: |
+ def format_guarantor_list(text):
+   if not text:
+       return ""
+   names = [name.strip() for name in text.split('\n') if name.strip()]
+   return "\n".join(f"• {name}" for name in names)
+
+---

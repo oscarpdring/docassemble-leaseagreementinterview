@@ -1,0 +1,11 @@
+---
+attachment:
+ name: FOOD_AND_BEVERAGE
+ filename: FOOD_AND_BEVERAGE
+ docx template file: FOOD_AND_BEVERAGE_USE_RIDER_1.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: fb_doc
+
+---

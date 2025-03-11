@@ -1,0 +1,11 @@
+---
+code: |
+  def format_guarantor_signatures(text):
+    if not text:
+      return ""
+    signatures = [sig.strip() for sig in text.split('\n') if sig.strip()]
+    formatted_sigs = []
+    for sig in signatures:
+      formatted_sigs.append(f"\n\n X______________________ \nBy: {sig}, Date:")
+    return "\n".join(formatted_sigs)
+---

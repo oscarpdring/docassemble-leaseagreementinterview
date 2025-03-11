@@ -1,0 +1,11 @@
+---
+attachment:
+ name: Short Form Lease
+ filename: short_form_lease
+ docx template file: Short_form_of_lease.docx
+ valid formats:
+   - pdf
+   - docx
+ variable name: short_form_lease_doc
+
+---
